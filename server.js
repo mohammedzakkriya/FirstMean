@@ -47,6 +47,9 @@ var showSchema = new mongoose.Schema({
 
 var userSchema = new mongoose.Schema({
   name: { type: String, trim: true, required: true },
+  phone: { type: String, trim: true, required: true },
+  dob: { type: Date, trim: true, required: true },
+  gender: { type: String, trim: true, required: true },
   email: { type: String, unique: true, lowercase: true, trim: true },
   password: String,
   facebook: {
@@ -124,6 +127,9 @@ app.post('/auth/signup', function(req, res, next) {
   var user = new User({
     name: req.body.name,
     email: req.body.email,
+    phone: req.body.phone,
+    dob: req.body.dob,
+    gender: req.body.gender,
     password: req.body.password
   });
   user.save(function(err) {
@@ -339,7 +345,30 @@ app.post('/api/unsubscribe', ensureAuthenticated, function(req, res, next) {
     });
   });
 });
-
+app.get('/api/profile/:id', function(req, res, next) {
+  User.findById(req.params.id, function(err, profile) {
+    if (err) return next(err);
+    res.send(profile);
+  });
+});
+app.put( '/api/profile/:id', function(request, response, next ) {
+    User.findById( request.params.id, function( err, user ) {
+        user.name = request.body.name;
+        user.dob = request.body.dob;
+        user.gender = request.body.gender;
+        user.email = request.body.email;
+        user.password = request.body.password;
+        user.save( function( err ) {
+            if(!err ) {
+                console.log('user  updated');
+                response.send(user);
+            } else {
+                console.log(err);
+                return next(err);
+            }
+        });
+    });
+});
 app.get('*', function(req, res) {
   res.redirect('/#' + req.originalUrl);
 });

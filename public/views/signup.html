@@ -12,7 +12,29 @@
               <div ng-message="required">You must enter your name.</div>
             </div>
           </div>
-
+          <div class="form-group has-feedback" ng-class="{ 'has-error' : signupForm.phoneNumber.$invalid && signupForm.phoneNumber.$dirty }">
+            <input class="form-control input-lg" type="text" name="phoneNumber" ng-model="phoneNumber" placeholder="Phone Number" required>
+            <span class="ion-person form-control-feedback"></span>
+            <div class="help-block text-danger" ng-if="signupForm.phoneNumber.$dirty" ng-messages="signupForm.phoneNumber.$error">
+              <div ng-message="required">You must enter your Phone Number.</div>
+            </div>
+          </div>
+          <div class="form-group has-feedback" ng-class="{ 'has-error' : signupForm.dob.$invalid && signupForm.dob.$dirty }">
+    
+          <input type="text" class="form-control input-lg" uib-datepicker-popup="{{format}}" ng-model="dob" name="dob" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" ng-click="open2()" placeholder="Date of Birth"/>
+          <span class="fa fa-calendar form-control-feedback" ></span>
+          <div class="help-block text-danger" ng-if="signupForm.dob.$dirty" ng-messages="signupForm.dob.$error">
+            <div ng-message="required">Please enter date of birth.</div>
+          </div>
+          </div>
+          <div class="form-group has-feedback" ng-class="{ 'has-error' : signupForm.gender.$invalid && signupForm.gender.$dirty }">
+                  <select class="form-control input-lg" ng-model="gender" name="gender">
+                    <option value="" selected>Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+           </select>
+           <span class="ion-person form-control-feedback" ></span>
+          </div>
           <div class="form-group has-feedback" ng-class="{ 'has-error' : signupForm.email.$invalid && signupForm.email.$dirty }">
             <input unique-email class="form-control input-lg" type="email" id="email" name="email" ng-model="email" placeholder="Email" required autofocus>
             <span class="ion-at form-control-feedback"></span>
@@ -30,6 +52,7 @@
               <div ng-message="required">Password is required.</div>
             </div>
           </div>
+          
 
           <p class="text-center text-muted"><small>By clicking on Sign up, you agree to <a href="#">terms & conditions</a> and <a href="#">privacy policy</a></small></p>
 
